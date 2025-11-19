@@ -9,12 +9,13 @@ PFDA-programming-for-data-analytics/
 ├── assignments/
 │   ├── assignment02-bankholidays.py
 │   ├── assignment02-bankholidays.txt
-|   ├── assignment03-pie.ipynb
-|   ├── assignment05-population.ipynb
-|   └── assignment_6_Weather.ipynb
-├── data/
+│   ├── assignment03-pie.ipynb
+│   ├── assignment05-population.ipynb
+│   └── assignment_6_Weather.ipynb
+├── big_project/
 │   └── README.md
 ├── data/
+│   ├── README.md
 │   └── bankholidays.json
 ├── my-work/
 └── project/
