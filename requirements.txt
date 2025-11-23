@@ -1,1 +1,7 @@
 requests
+numpy
+pandas
+matplotlib
+seaborn
+xlrd
+openpyxl
