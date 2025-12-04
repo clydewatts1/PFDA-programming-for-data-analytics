@@ -206,5 +206,6 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Ignore database files for a  project named "big_project" created with each run
+# Ignore database files for a project named "big_project" created with each run
 big_project/data/db_sqlite/
+big_project/data/db_sqlite/big_project_db.sqlite3
