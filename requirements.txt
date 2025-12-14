@@ -1,8 +1,13 @@
-requests
 numpy
 pandas
 matplotlib
 seaborn
 xlrd
-openpyxl
 meteostat
+ipython
+scikit-learn
+shap
+pvlib
+scipy
+xgboost
+lightgbm
