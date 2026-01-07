@@ -11,3 +11,4 @@ pvlib
 scipy
 xgboost
 lightgbm
+pygam
