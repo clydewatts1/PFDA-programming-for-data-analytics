@@ -12,6 +12,8 @@ This document describes the implementation of Gaussian Process Regression (GPR) 
 The GPR model uses a composite kernel specifically designed for solar prediction:
 
 ```python
+from sklearn.gaussian_process.kernels import RBF, WhiteKernel, ExpSineSquared, ConstantKernel as C
+
 kernel = (
     C(1.0, (1e-3, 1e3)) * RBF(length_scale=10.0, length_scale_bounds=(1e-2, 1e3)) +
     C(1.0, (1e-3, 1e3)) * ExpSineSquared(length_scale=1.0, periodicity=24.0, 
@@ -95,7 +97,7 @@ The notebook supports multiple target formulations:
 
 ### 5. Advantages of GPR for Solar Prediction
 
-1. **Uncertainty Quantification**: GPR provides prediction intervals (not implemented in current version but available)
+1. **Uncertainty Quantification**: GPR has the capability to provide prediction intervals with confidence bounds. This feature is not utilized in the current implementation but can be easily added by using the `return_std=True` parameter in the `predict()` method.
 2. **Non-parametric**: Automatically adapts to data complexity
 3. **Kernel Flexibility**: Can combine multiple patterns (smooth trends + periodicity)
 4. **Small Data Performance**: Often outperforms other methods with limited training data
