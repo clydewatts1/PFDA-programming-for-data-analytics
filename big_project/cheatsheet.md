@@ -1,0 +1,513 @@
+# Machine Learning Models Cheatsheet for Solar Power Forecasting
+
+This cheatsheet provides an overview of the machine learning techniques used in this project for residential solar power output forecasting. Each section includes a description of the technique, its primary Python library, detailed applicability to our solar forecasting problem, pros and cons, and helpful references.
+
+---
+
+## Random Forest
+
+### Short Description
+Random Forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mean prediction of individual trees for regression tasks. Each tree is trained on a random subset of the data and features, reducing overfitting and improving generalization.
+
+### Primary Python Library
+**scikit-learn** - `sklearn.ensemble.RandomForestRegressor`
+- Part of the scikit-learn machine learning library
+- Well-documented and widely used in production environments
+- Provides easy-to-use API with sensible defaults
+
+### Detailed Description - Applicability to Residential Power Output
+
+Random Forest is highly applicable to solar power forecasting for several reasons:
+
+1. **Non-linear Relationships**: Solar generation depends on complex, non-linear relationships between weather variables (irradiance, temperature, cloud cover, humidity) and power output. Random Forest naturally captures these relationships without requiring manual feature engineering.
+
+2. **Feature Importance**: The algorithm provides built-in feature importance metrics, helping identify which meteorological variables most strongly influence solar generation. This insight is valuable for understanding the physical system and data quality.
+
+3. **Robustness to Outliers**: Weather data often contains anomalies (sensor errors, extreme events). Random Forest's ensemble nature makes it resistant to outliers that might skew predictions.
+
+4. **Handling Missing Data**: The algorithm can handle missing values in the dataset reasonably well, which is common in real-world weather and power generation data.
+
+5. **Time Series Considerations**: When engineered with appropriate lagged features and temporal indicators (hour of day, day of year, seasonal features), Random Forest can capture temporal patterns in solar generation.
+
+6. **Computational Efficiency**: For medium-sized datasets (typical for residential solar installations with hourly readings), Random Forest trains quickly and provides fast predictions suitable for operational forecasting.
+
+### Pros
+- **Easy to implement and tune**: Few critical hyperparameters to optimize
+- **Robust performance**: Works well out-of-the-box with minimal preprocessing
+- **No feature scaling required**: Handles variables of different scales naturally
+- **Interpretability**: Feature importance rankings provide insights into model decisions
+- **Handles non-linear relationships**: Captures complex patterns without manual feature engineering
+- **Parallel training**: Trees can be trained independently, enabling multi-core processing
+
+### Cons
+- **Memory intensive**: Stores multiple decision trees, requiring significant memory for large forests
+- **Black box for specific predictions**: While feature importance is available, individual predictions are hard to interpret
+- **Extrapolation limitations**: Cannot predict beyond the range of training data values
+- **Temporal dependencies**: Doesn't naturally model time series autocorrelation without manual feature engineering
+- **Overfitting risk**: With too many trees or deep trees, can overfit to training data noise
+
+### References
+- [Random Forest - Wikipedia](https://en.wikipedia.org/wiki/Random_forest) - Comprehensive theoretical overview
+- [scikit-learn RandomForestRegressor Documentation](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) - Official API documentation
+- [Random Forests in Machine Learning - Shelf.io](https://shelf.io/blog/random-forests-in-machine-learning/) - Practical overview and applications
+- [Google Decision Forests Overview](https://developers.google.com/machine-learning/decision-forests/random-forests) - Google's guide to Random Forests
+- [DataCamp Random Forests Tutorial](https://www.datacamp.com/tutorial/random-forests-classifier-python) - Step-by-step tutorial
+- [Solar Forecasting with Random Forest - ScienceDirect](https://www.sciencedirect.com/science/article/abs/pii/S0960148116311648) - Research paper on solar power forecasting
+
+---
+
+## XGBoost (Extreme Gradient Boosting)
+
+### Short Description
+XGBoost is an optimized distributed gradient boosting library that implements machine learning algorithms under the Gradient Boosting framework. It builds an ensemble of decision trees sequentially, where each new tree corrects errors made by the previous ones, using gradient descent optimization.
+
+### Primary Python Library
+**XGBoost** - `xgboost.XGBRegressor`
+- Standalone library specifically designed for gradient boosting
+- Highly optimized for speed and performance
+- Winner of numerous Kaggle competitions
+
+### Detailed Description - Applicability to Residential Power Output
+
+XGBoost is particularly well-suited for solar power forecasting:
+
+1. **Gradient Boosting Power**: By sequentially building trees that correct previous errors, XGBoost can achieve superior predictive accuracy compared to Random Forest, especially important for precise solar generation forecasting where small improvements in accuracy translate to better grid management and energy planning.
+
+2. **Regularization**: Built-in L1 (Lasso) and L2 (Ridge) regularization prevents overfitting, crucial when working with rich feature sets from multiple meteorological data sources (Copernicus, Meteostat, ESB Microgen).
+
+3. **Handling Sparse Data**: Efficiently handles sparse features and missing values with a default direction learning approach, useful when weather data has gaps or when using one-hot encoded categorical features.
+
+4. **Custom Loss Functions**: Allows definition of custom objective functions and evaluation metrics, enabling optimization for specific solar forecasting needs (e.g., asymmetric costs of over/under-prediction).
+
+5. **Feature Engineering Support**: Works exceptionally well with engineered features like time-based indicators, rolling averages of irradiance, and interaction terms between weather variables.
+
+6. **Performance Monitoring**: Built-in cross-validation and early stopping prevent overfitting during training, essential for maintaining model generalization to future solar generation patterns.
+
+7. **Tree Pruning**: Uses a depth-first approach with max_depth parameter and prunes trees backward, resulting in more optimized tree structures for the solar forecasting task.
+
+### Pros
+- **High predictive accuracy**: Often achieves state-of-the-art results on structured data
+- **Regularization**: Built-in L1/L2 regularization reduces overfitting
+- **Handles missing values**: Learns optimal default directions for missing data
+- **Feature importance**: Provides multiple metrics for feature importance analysis
+- **Flexible**: Supports custom loss functions and evaluation metrics
+- **Efficient**: Optimized C++ implementation with parallel processing
+- **Early stopping**: Built-in early stopping prevents overfitting during training
+
+### Cons
+- **Sensitive to hyperparameters**: Requires careful tuning for optimal performance
+- **Sequential training**: Trees must be built sequentially, limiting parallelization compared to Random Forest
+- **Overfitting risk**: Can overfit if not properly regularized, especially with small datasets
+- **Interpretability**: More complex than Random Forest, harder to explain individual predictions
+- **Training time**: Can be slower than Random Forest for similar accuracy levels
+- **Memory usage**: Requires significant memory for large datasets with many features
+
+### References
+- [XGBoost Documentation](https://xgboost.readthedocs.io/en/stable/) - Official comprehensive documentation
+- [XGBoost Python API Reference](https://xgboost.readthedocs.io/en/stable/python/python_api.html) - Python API guide
+- [XGBoost Paper](https://arxiv.org/abs/1603.02754) - Original research paper by Tianqi Chen and Carlos Guestrin
+- [XGBoost Tutorials](https://xgboost.readthedocs.io/en/stable/tutorials/index.html) - Official tutorials and examples
+- [Introduction to Boosted Trees](https://xgboost.readthedocs.io/en/stable/tutorials/model.html) - Theoretical background
+- [Kaggle XGBoost Tutorial](https://www.kaggle.com/code/alexisbcook/xgboost) - Practical guide with examples
+
+---
+
+## AdaBoost (Adaptive Boosting)
+
+### Short Description
+AdaBoost is an ensemble boosting algorithm that combines multiple weak learners (typically shallow decision trees) into a strong learner. It adaptively adjusts the weights of training instances, giving more weight to instances that were incorrectly predicted by previous learners, forcing subsequent models to focus on harder cases.
+
+### Primary Python Library
+**scikit-learn** - `sklearn.ensemble.AdaBoostRegressor`
+- Part of scikit-learn's ensemble module
+- Compatible with various base estimators
+- Simple interface consistent with other scikit-learn estimators
+
+### Detailed Description - Applicability to Residential Power Output
+
+AdaBoost offers unique advantages for solar power forecasting:
+
+1. **Adaptive Learning**: By focusing on difficult-to-predict instances (e.g., rapidly changing weather conditions, dawn/dusk transitions), AdaBoost can improve accuracy in challenging forecasting scenarios that are critical for solar generation.
+
+2. **Weak Learners**: Uses simple base learners (shallow decision trees or stumps), which individually might underperform but collectively create a powerful predictor. This is beneficial when trying to model the complex relationship between multiple weather variables and solar output.
+
+3. **Noise Sensitivity Consideration**: While AdaBoost focuses on hard examples, this can be problematic with noisy sensor data. For solar forecasting, preprocessing and outlier removal become crucial to prevent the model from overfitting to measurement errors.
+
+4. **Sequential Nature**: Like XGBoost, AdaBoost builds models sequentially, but uses a different weighting scheme. This can capture progressive refinement of predictions across different weather regimes and operational conditions.
+
+5. **Interpretability**: Using decision stumps (single-split trees) as base learners provides better interpretability than deeper trees, helpful for understanding which weather thresholds most impact solar generation predictions.
+
+6. **Baseline Comparison**: AdaBoost serves as a good baseline for comparing against more sophisticated boosting algorithms like XGBoost, helping validate whether added complexity provides genuine improvement for the solar forecasting task.
+
+### Pros
+- **Simple to implement**: Easy to understand conceptually and implement
+- **Versatile**: Can use different weak learners as base estimators
+- **No hyperparameter tuning for base learner**: Works well with simple decision stumps
+- **Good for binary features**: Performs well with categorical and binary predictors
+- **Reduces bias and variance**: Effective at reducing both types of errors
+- **Feature selection**: Implicitly performs feature selection by weighting
+
+### Cons
+- **Sensitive to noise and outliers**: Focuses on misclassified instances, which may include noisy data
+- **Requires quality data**: Poor performance on noisy datasets common in real-world sensor data
+- **Sequential training**: Cannot parallelize the training process
+- **Overfitting risk**: Can overfit if trained for too many iterations
+- **Slower than Random Forest**: Sequential nature makes it slower to train
+- **Sensitive to weak learner choice**: Performance depends heavily on the base estimator used
+
+### References
+- [AdaBoost - Wikipedia](https://en.wikipedia.org/wiki/AdaBoost) - Comprehensive theoretical overview
+- [scikit-learn AdaBoostRegressor Documentation](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html) - Official API documentation
+- [scikit-learn Ensemble Guide](https://scikit-learn.org/stable/modules/ensemble.html#adaboost) - Ensemble methods overview including AdaBoost
+- [Original AdaBoost Paper](https://www.sciencedirect.com/science/article/pii/S002200009791504X) - Freund and Schapire's seminal work
+- [Understanding AdaBoost - Towards Data Science](https://towardsdatascience.com/understanding-adaboost-2f94f22d5bfe) - Intuitive explanation
+
+---
+
+## Gaussian Process Regression (GPR)
+
+### Short Description
+Gaussian Process Regression is a non-parametric Bayesian approach to regression that defines a probability distribution over possible functions. Instead of assuming a specific functional form, GPR models the entire distribution of functions consistent with the training data, providing both predictions and uncertainty estimates.
+
+### Primary Python Library
+**scikit-learn** - `sklearn.gaussian_process.GaussianProcessRegressor`
+- Part of scikit-learn's gaussian_process module
+- Implements various kernel functions for different patterns
+- Provides uncertainty quantification out-of-the-box
+
+### Detailed Description - Applicability to Residential Power Output
+
+GPR offers unique capabilities for solar power forecasting:
+
+1. **Uncertainty Quantification**: GPR provides confidence intervals with every prediction, crucial for solar forecasting where understanding prediction uncertainty helps with grid management, battery storage decisions, and risk assessment. During uncertain weather conditions (scattered clouds), wider confidence intervals appropriately reflect higher prediction uncertainty.
+
+2. **Smooth Predictions**: The kernel-based approach produces smooth, continuous predictions ideal for solar generation patterns that vary smoothly throughout the day (following the sun's trajectory) rather than making abrupt changes.
+
+3. **Kernel Selection**: Different kernels capture different patterns:
+   - **RBF (Radial Basis Function)**: Models smooth variations in solar output with irradiance
+   - **Matérn kernel**: Captures rougher patterns for more variable conditions
+   - **Periodic kernel**: Models daily and seasonal cycles in solar generation
+   - **Composite kernels**: Combine multiple patterns (daily cycle + weather effects)
+
+4. **Small to Medium Data**: GPR excels with smaller datasets typical of individual residential installations, where deep learning approaches would overfit or fail to converge.
+
+5. **Physical Interpretation**: Kernel hyperparameters can provide insights into the characteristic timescales and length scales of solar generation processes, connecting to physical understanding of solar and weather systems.
+
+6. **Online Learning**: GPR can be updated incrementally as new data arrives, useful for adaptive forecasting that adjusts to panel degradation or changing local conditions.
+
+### Pros
+- **Uncertainty estimates**: Provides confidence intervals for every prediction
+- **Flexible modeling**: Kernel functions can encode domain knowledge and physical principles
+- **Probabilistic framework**: Full Bayesian treatment of predictions
+- **Works with small datasets**: Performs well even with limited training data
+- **No overfitting with proper kernel**: Regularization is naturally incorporated
+- **Interpolation strength**: Excellent for interpolating between known data points
+
+### Cons
+- **Computational complexity**: O(n³) training time and O(n²) prediction time becomes prohibitive for large datasets
+- **Memory requirements**: Storing the full covariance matrix requires O(n²) memory
+- **Kernel selection**: Performance heavily depends on choosing appropriate kernel structure
+- **Hyperparameter sensitivity**: Requires careful tuning of kernel hyperparameters
+- **Not suitable for large datasets**: Impractical for datasets beyond ~10,000 samples
+- **Extrapolation limitations**: Can produce unrealistic uncertainties outside training data range
+
+### References
+- [Gaussian Processes - Wikipedia](https://en.wikipedia.org/wiki/Gaussian_process) - Theoretical foundation
+- [scikit-learn GaussianProcessRegressor Documentation](https://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessRegressor.html) - Official API documentation
+- [Gaussian Processes for Machine Learning (Book)](http://www.gaussianprocess.org/gpml/) - Comprehensive free textbook by Rasmussen and Williams
+- [scikit-learn Gaussian Processes Guide](https://scikit-learn.org/stable/modules/gaussian_process.html) - Tutorial and examples
+- [Distill.pub - A Visual Exploration of Gaussian Processes](https://distill.pub/2019/visual-exploration-gaussian-processes/) - Interactive visual guide
+- [Gaussian Processes for Time Series Forecasting](https://peterroelants.github.io/posts/gaussian-process-tutorial/) - Practical tutorial
+
+---
+
+## Support Vector Regression (SVR)
+
+### Short Description
+Support Vector Regression is an extension of Support Vector Machines for regression tasks. It finds a function that deviates from the actual target values by a value no greater than a specified margin (ε) for each training point, while also being as flat as possible. SVR is particularly effective for high-dimensional data and non-linear relationships.
+
+### Primary Python Library
+**scikit-learn** - `sklearn.svm.SVR`
+- Part of scikit-learn's svm module
+- Implements various kernel functions (linear, polynomial, RBF, sigmoid)
+- Efficient implementation of the epsilon-insensitive loss function
+
+### Detailed Description - Applicability to Residential Power Output
+
+SVR provides several advantages for solar power forecasting:
+
+1. **Margin-Based Learning**: The ε-insensitive loss function allows the model to ignore errors within a tolerance margin, useful for solar forecasting where small prediction errors (e.g., ±0.1 kWh) may be acceptable for operational purposes, focusing model capacity on avoiding larger errors.
+
+2. **Kernel Trick**: Enables modeling of complex non-linear relationships between weather variables and solar output without explicit feature engineering. The RBF kernel is particularly effective for capturing the non-linear response of solar panels to irradiance and temperature.
+
+3. **Robust to Outliers**: The use of support vectors (subset of training points) makes SVR less sensitive to outliers than traditional regression methods, important when dealing with sensor errors or anomalous weather events in the training data.
+
+4. **High-Dimensional Spaces**: Effective in high-dimensional feature spaces created by multiple weather variables, their interactions, and temporal features, without suffering from the curse of dimensionality.
+
+5. **Regularization**: The C parameter provides explicit control over the trade-off between model complexity and training error, helping prevent overfitting to noise in weather and power generation data.
+
+6. **Generalization**: The principle of structural risk minimization provides good generalization to unseen weather conditions, though performance may degrade for conditions far from training examples.
+
+### Pros
+- **Effective in high dimensions**: Performs well with many features relative to samples
+- **Memory efficient**: Only uses support vectors for predictions, not entire training set
+- **Versatile**: Different kernel functions for different types of relationships
+- **Robust to outliers**: Less affected by outliers than linear regression
+- **Regularization built-in**: C parameter controls model complexity
+- **Unique solution**: Convex optimization ensures global optimum
+
+### Cons
+- **Computational complexity**: Training time increases significantly with dataset size (O(n²) to O(n³))
+- **Kernel and parameter selection**: Performance sensitive to kernel choice and hyperparameter tuning
+- **No probabilistic interpretation**: Does not provide uncertainty estimates like GPR
+- **Scaling required**: Features must be scaled for optimal performance
+- **Memory intensive for large datasets**: Kernel matrix can consume significant memory
+- **Black box predictions**: Limited interpretability of individual predictions
+
+### References
+- [Support Vector Regression - Wikipedia](https://en.wikipedia.org/wiki/Support_vector_machine#Regression) - Theoretical overview
+- [scikit-learn SVR Documentation](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVR.html) - Official API documentation
+- [scikit-learn SVM Guide](https://scikit-learn.org/stable/modules/svm.html) - Support Vector Machines user guide
+- [A Tutorial on Support Vector Regression](https://alex.smola.org/papers/2004/SmoSch04.pdf) - Detailed technical tutorial
+- [Introduction to SVR - Analytics Vidhya](https://www.analyticsvidhya.com/blog/2020/03/support-vector-regression-tutorial-for-machine-learning/) - Practical introduction
+
+---
+
+## PyGAM (Generalized Additive Models)
+
+### Short Description
+Generalized Additive Models (GAMs) are a class of statistical models that extend linear models by allowing non-linear relationships between features and the target variable. PyGAM uses smooth functions (splines) for each feature, maintaining interpretability while capturing non-linear patterns. The model is additive, meaning the contribution of each feature can be examined independently.
+
+### Primary Python Library
+**pyGAM** - `pygam.LinearGAM` or `pygam.GAM`
+- Specialized library for Generalized Additive Models
+- Implements various spline types (cubic, natural cubic, periodic)
+- Provides tools for visualizing partial dependence
+
+### Detailed Description - Applicability to Residential Power Output
+
+PyGAM is particularly valuable for solar power forecasting:
+
+1. **Interpretability**: Unlike black-box models, GAMs allow visualization of how each weather variable independently affects solar generation. You can plot the learned function for irradiance, temperature, or cloud cover separately, providing insights into the physical relationships.
+
+2. **Smooth Non-linear Functions**: Spline-based smoothing naturally captures the smooth non-linear relationships in solar generation, such as:
+   - The curved response of panel efficiency to temperature
+   - The non-linear relationship between irradiance and power output
+   - The smooth daily cycle of solar generation
+
+3. **Periodic Splines**: Special spline types can model periodic patterns (daily cycles, seasonal variations) explicitly, ensuring predictions respect the cyclical nature of solar generation without requiring manual feature engineering.
+
+4. **Statistical Framework**: Provides statistical significance tests for each feature's contribution, helping identify which weather variables genuinely impact solar generation versus spurious correlations.
+
+5. **Regularization**: Automatic smoothness regularization prevents overfitting while maintaining flexibility, controlled by the number and type of basis functions (splines).
+
+6. **Extrapolation Behavior**: Splines can be constrained to linear behavior outside the training data range, providing more reasonable extrapolation than tree-based methods.
+
+7. **Model Debugging**: Because each feature's effect is additive and visualizable, it's easy to identify if the model has learned physically unrealistic relationships, enabling data quality issues to be detected and corrected.
+
+### Pros
+- **Highly interpretable**: Can visualize the effect of each feature independently
+- **Captures non-linearity**: Models complex relationships without losing interpretability
+- **Automatic smoothness**: Balances flexibility and overfitting through smoothness penalties
+- **Statistical inference**: Provides confidence intervals and significance tests
+- **Handles different feature types**: Can model continuous, categorical, and periodic features
+- **Flexible**: Various spline types and link functions for different problems
+
+### Cons
+- **Additive assumption**: Assumes features contribute independently, missing interaction effects
+- **Less flexible than tree methods**: May underperform when strong feature interactions exist
+- **Requires feature scaling**: Performance can be sensitive to feature scales
+- **Manual tuning**: Number of splines and smoothness parameters require tuning
+- **Limited to medium datasets**: Can become computationally expensive for very large datasets
+- **Feature engineering still needed**: May need to manually create interaction terms for important combinations
+
+### References
+- [pyGAM Documentation](https://pygam.readthedocs.io/en/latest/) - Official comprehensive documentation
+- [pyGAM GitHub Repository](https://github.com/dswah/pyGAM) - Source code and examples
+- [Generalized Additive Models - Wikipedia](https://en.wikipedia.org/wiki/Generalized_additive_model) - Theoretical background
+- [GAMs in R and Python Tutorial](https://m-clark.github.io/generalized-additive-models/) - Comprehensive tutorial
+- [The Elements of Statistical Learning - GAM Chapter](https://hastie.su.domains/ElemStatLearn/) - Theoretical foundation (Chapter 9)
+- [pyGAM Tutorials](https://pygam.readthedocs.io/en/latest/notebooks/tour_of_pygam.html) - Official tutorial notebooks
+
+---
+
+## Artificial Neural Network (ANN)
+
+### Short Description
+Artificial Neural Networks are computing systems inspired by biological neural networks. They consist of interconnected layers of nodes (neurons) that process information through weighted connections. For regression tasks, ANNs learn complex non-linear mappings from input features to target values through backpropagation and gradient descent optimization.
+
+### Primary Python Library
+**PyTorch** - `torch.nn.Module`
+- Leading deep learning framework with dynamic computation graphs
+- Extensive ecosystem for neural network development
+- GPU acceleration for faster training
+
+Alternative: **TensorFlow/Keras** - `tensorflow.keras.Sequential`
+
+### Detailed Description - Applicability to Residential Power Output
+
+ANNs offer powerful capabilities for solar power forecasting:
+
+1. **Universal Approximation**: ANNs can theoretically approximate any continuous function, making them capable of capturing the complex, non-linear relationships between meteorological variables and solar power output, including subtle interactions that might be missed by simpler models.
+
+2. **Automatic Feature Learning**: Hidden layers automatically learn useful representations of the input features, discovering complex patterns and interactions without manual feature engineering. For solar forecasting, this might include learning compound effects of temperature, irradiance, and humidity.
+
+3. **Scalability**: Unlike GP or SVR, ANNs scale well to large datasets. As more historical data accumulates, ANNs can continue to improve, learning from diverse weather patterns and operational conditions.
+
+4. **Multi-output Capability**: Can easily be extended to predict multiple time steps ahead simultaneously (e.g., next 24 hours of generation) or predict both generation and uncertainty.
+
+5. **Transfer Learning**: Pre-trained networks from similar forecasting tasks can be fine-tuned for specific installations, reducing data requirements for new solar sites.
+
+6. **Recurrent Architectures**: Extensions like LSTMs or GRUs can explicitly model temporal dependencies and weather patterns evolving over time, though this project uses feedforward networks.
+
+7. **GPU Acceleration**: Training can be significantly accelerated using GPUs, making it practical to experiment with different architectures and hyperparameters.
+
+8. **Regularization Techniques**: Dropout, batch normalization, and early stopping help prevent overfitting, crucial when training flexible models on relatively small residential solar datasets.
+
+### Pros
+- **High capacity**: Can model extremely complex non-linear relationships
+- **Automatic feature extraction**: Learns useful representations without manual engineering
+- **Scalable**: Efficient with large datasets and GPU acceleration
+- **Flexible architecture**: Can be customized for specific problem requirements
+- **Multi-task learning**: Can predict multiple outputs simultaneously
+- **Transfer learning**: Can leverage pre-trained models from related tasks
+
+### Cons
+- **Black box**: Very difficult to interpret how decisions are made
+- **Requires large datasets**: Generally needs more data than traditional ML methods
+- **Hyperparameter sensitivity**: Many architectural and training decisions affect performance
+- **Training instability**: Can be sensitive to initialization and learning rates
+- **Overfitting risk**: High capacity makes overfitting likely without proper regularization
+- **Computational cost**: Training requires significant computational resources
+- **No uncertainty estimates**: Standard ANNs don't provide confidence intervals (requires Bayesian variants)
+
+### References
+- [PyTorch Documentation](https://pytorch.org/docs/stable/index.html) - Official comprehensive documentation
+- [PyTorch Tutorials](https://pytorch.org/tutorials/) - Official tutorials for various tasks
+- [Neural Networks - Wikipedia](https://en.wikipedia.org/wiki/Artificial_neural_network) - Theoretical overview
+- [Deep Learning Book](https://www.deeplearningbook.org/) - Comprehensive textbook by Goodfellow, Bengio, and Courville
+- [Stanford CS231n](https://cs231n.github.io/) - Convolutional Neural Networks course materials
+- [PyTorch for Deep Learning - Zero to Mastery](https://www.learnpytorch.io/) - Practical PyTorch tutorial
+- [Neural Network Playground](https://playground.tensorflow.org/) - Interactive visualization of neural networks
+
+---
+
+## KAN (Kolmogorov-Arnold Networks)
+
+### Short Description
+Kolmogorov-Arnold Networks are a novel neural network architecture based on the Kolmogorov-Arnold representation theorem, which states that any multivariate continuous function can be represented as a composition of continuous functions of a single variable and addition. Unlike traditional ANNs that place activation functions at nodes, KANs place learnable activation functions on edges (weights), making the network more parameter-efficient and interpretable.
+
+### Primary Python Library
+**pykan** or custom implementations
+- Emerging library ecosystem for KAN implementation
+- Often built on top of PyTorch
+- Research-focused implementations
+
+Alternative: **FFKAN** - Fast Fourier Kolmogorov-Arnold Network variant
+
+### Detailed Description - Applicability to Residential Power Output
+
+KANs represent a cutting-edge approach to solar power forecasting with unique advantages:
+
+1. **Parameter Efficiency**: KANs can achieve similar or better accuracy than traditional ANNs with significantly fewer parameters. For residential solar forecasting with limited data, this reduces overfitting risk while maintaining model capacity.
+
+2. **Interpretable Activation Functions**: By learning univariate activation functions on edges rather than fixed activations at nodes, KANs can reveal how the network processes each input variable. For solar forecasting, this might show exactly how the model transforms irradiance or temperature values.
+
+3. **Mathematical Foundation**: The Kolmogorov-Arnold theorem provides theoretical justification for the architecture, offering stronger theoretical guarantees than traditional empirical neural network designs.
+
+4. **Smooth Function Learning**: KANs naturally learn smooth functions, aligning well with the smooth physical processes underlying solar generation (sun's path, gradual weather changes).
+
+5. **Feature Interaction Discovery**: The architecture explicitly represents how features are combined, making it easier to understand which weather variable interactions most strongly influence predictions.
+
+6. **Gradient Stability**: Some KAN variants (like FFKAN using Fourier bases) exhibit more stable gradients during training, leading to more reliable convergence and easier hyperparameter tuning.
+
+7. **Research and Innovation**: KANs are an active research area, making this project an opportunity to explore state-of-the-art techniques and potentially discover insights not available with established methods.
+
+8. **Comparison Value**: Implementing KAN alongside traditional methods provides valuable comparison data about whether theoretical advantages translate to practical improvements for solar forecasting.
+
+### Pros
+- **Parameter efficient**: Achieves good performance with fewer parameters than traditional ANNs
+- **Better interpretability**: Learnable activation functions provide insight into feature processing
+- **Strong theoretical foundation**: Based on proven mathematical theorem
+- **Fast training**: Fewer parameters often means faster convergence
+- **Smooth function approximation**: Well-suited for problems with smooth underlying relationships
+- **Architectural innovation**: Represents a fundamentally different approach to neural networks
+
+### Cons
+- **Limited ecosystem**: Newer architecture with less mature tooling and libraries
+- **Less documented**: Fewer tutorials, examples, and community resources
+- **Experimental status**: Not yet proven in production environments
+- **Training techniques**: Best practices still being established by research community
+- **Debugging difficulty**: Novel architecture makes troubleshooting more challenging
+- **Limited pre-trained models**: No transfer learning opportunities from existing models
+- **Computational requirements**: Some implementations may be less optimized than mature frameworks
+
+### References
+- [KAN: Kolmogorov-Arnold Networks Paper](https://arxiv.org/abs/2404.19756) - Original research paper introducing KANs
+- [pykan GitHub Repository](https://github.com/KindXiaoming/pykan) - Official implementation
+- [Kolmogorov-Arnold Representation Theorem - Wikipedia](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Arnold_representation_theorem) - Mathematical foundation
+- [KAN Explained - Towards Data Science](https://towardsdatascience.com/kolmogorov-arnold-networks-kan-explained-f9e8c1e51ad7) - Intuitive explanation
+- [FFKAN Implementation](https://github.com/Ghaith81/FFKAN) - Fast Fourier KAN variant
+- [KAN vs MLP Comparison](https://arxiv.org/abs/2405.14679) - Research comparing KANs to traditional networks
+
+---
+
+## General References for Solar Power Forecasting
+
+### Data Sources and Tools
+- [Copernicus Climate Data Store](https://cds.climate.copernicus.eu/) - European weather and climate data
+- [Meteostat](https://meteostat.net/) - Historical weather data
+- [PVLIB Python](https://pvlib-python.readthedocs.io/) - Solar PV modeling library
+- [SolisCloud](https://www.soliscloud.com/) - Solar inverter monitoring platform
+
+### Machine Learning and Statistics
+- [scikit-learn Documentation](https://scikit-learn.org/stable/) - Comprehensive ML library
+- [Forecasting: Principles and Practice](https://otexts.com/fpp3/) - Free textbook on forecasting
+- [Machine Learning Mastery](https://machinelearningmastery.com/) - Practical ML tutorials and guides
+
+### Evaluation Metrics
+- [RMSE (Root Mean Square Error)](https://statisticsbyjim.com/regression/root-mean-square-error-rmse/) - Understanding RMSE
+- [MAE vs RMSE](https://www.marinedatascience.co/blog/2019/01/07/normalizing-the-rmse/) - Choosing between error metrics
+- [Coefficient of Determination (R²)](https://en.wikipedia.org/wiki/Coefficient_of_determination) - Explained variance metric
+
+### Solar Energy Research
+- [NREL Solar Resource Data](https://www.nrel.gov/grid/solar-resource/home.html) - U.S. solar resource information
+- [International Energy Agency - Solar](https://www.iea.org/energy-system/renewables/solar-pv) - Global solar energy trends
+- [Solar Forecasting Best Practices](https://www.sciencedirect.com/science/article/pii/S0038092X16305175) - Academic review of methods
+
+---
+
+## Model Selection Guide for Solar Forecasting
+
+### Quick Recommendations
+
+**For Maximum Accuracy**: XGBoost or ANN
+- Best predictive performance
+- Requires careful hyperparameter tuning
+
+**For Interpretability**: PyGAM or Random Forest
+- Understand feature contributions
+- Explain predictions to stakeholders
+
+**For Uncertainty Quantification**: Gaussian Process Regression
+- Get confidence intervals
+- Important for risk management
+- Limited to smaller datasets
+
+**For Quick Baseline**: Random Forest
+- Works well out-of-the-box
+- Good starting point for comparison
+
+**For Research/Innovation**: KAN
+- Explore cutting-edge techniques
+- Parameter-efficient alternative to ANNs
+
+**For Noise Tolerance**: Random Forest or XGBoost
+- Robust to outliers and sensor errors
+- Handle missing data well
+
+### Ensemble Strategy
+Consider combining multiple models:
+- Use Random Forest + XGBoost + ANN in an ensemble
+- Average predictions or use stacking
+- Often achieves better results than any single model
