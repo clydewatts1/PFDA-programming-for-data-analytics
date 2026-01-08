@@ -395,7 +395,7 @@ ANNs offer powerful capabilities for solar power forecasting:
 ## KAN (Kolmogorov-Arnold Networks)
 
 ### Short Description
-Kolmogorov-Arnold Networks are a novel neural network architecture based on the Kolmogorov-Arnold representation theorem, which states that any multivariate continuous function can be represented as a composition of continuous functions of a single variable and addition. Unlike traditional ANNs that place activation functions at nodes, KANs place learnable activation functions on edges (weights), making the network more parameter-efficient and interpretable.
+Kolmogorov-Arnold Networks are a novel neural network architecture based on the Kolmogorov-Arnold representation theorem. This theorem states that any multivariate continuous function can be represented as a composition of continuous functions of a single variable and addition. Unlike traditional ANNs that place activation functions at nodes, KANs place learnable activation functions on edges (weights), making the network more parameter-efficient and interpretable.
 
 ### Primary Python Library
 **pykan** or custom implementations
@@ -438,7 +438,7 @@ KANs represent a cutting-edge approach to solar power forecasting with unique ad
 - **Less documented**: Fewer tutorials, examples, and community resources
 - **Experimental status**: Not yet proven in production environments
 - **Training techniques**: Best practices still being established by research community
-- **Debugging difficulty**: Novel architecture makes troubleshooting more challenging
+- **Debugging difficulty**: Novel architecture makes troubleshooting more challenging due to lack of established debugging tools and visualization methods
 - **Limited pre-trained models**: No transfer learning opportunities from existing models
 - **Computational requirements**: Some implementations may be less optimized than mature frameworks
 
