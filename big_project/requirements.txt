@@ -67,6 +67,20 @@ sympy>=1.12
 # seaborn (already listed)
 
 # ------------------------------------------------------------------------------
+# big_project/big_project_efficient_KAN.ipynb
+# Efficient Kolmogorov-Arnold Network model
+# Note: Install from GitHub as it's not on PyPI
+# Installation: pip install git+https://github.com/Blealtan/efficient-kan.git
+# ------------------------------------------------------------------------------
+# efficient-kan (install via: pip install git+https://github.com/Blealtan/efficient-kan.git)
+# torch (already listed)
+# numpy (already listed)
+# pandas (already listed)
+# matplotlib (already listed)
+# scikit-learn (already listed)
+# seaborn (already listed)
+
+# ------------------------------------------------------------------------------
 # big_project/big_project_random_forest_hourly.ipynb
 # Random Forest model for hourly solar prediction
 # ------------------------------------------------------------------------------
