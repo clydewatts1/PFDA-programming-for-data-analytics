@@ -4,7 +4,12 @@
 
 This project explores solar generation forecasting using meteorological data (Copernicus, Meteostat) and ESB Microgen readings. Multiple machine learning approaches are evaluated, including tree ensembles (Random Forest, AdaBoost, XGBoost), neural networks (PyTorch ANN), and Kolmogorov-Arnold Network (KAN) variants.  
   
-Special attention is given to residual analysis (Bland-Altman, Q-Q plots) to identify systematic bias and heavy-tailed error distributions common in solar forecasting. KANs are employed as a novel methodology (introduced in 2024) to overcome the 'black box' limitations of standard ANNs. They explicitly demonstrate the additive nature of the features, offering interpretability comparable to Random Forest decision trees.  
+Special attention is given to residual analysis (Bland-Altman, Q-Q plots) to identify systematic bias and heavy-tailed error distributions common in solar forecasting. KANs are employed as a novel methodology (introduced in 2024) to overcome the 'black box' limitations of standard ANNs. They explicitly demonstrate the additive nature of the features, offering interpretability comparable to Random Forest decision trees.
+
+**KAN Implementations:**
+- `big_project_KAN.ipynb` - Uses pykan library with custom fit/prune methods
+- `big_project_efficient_KAN.ipynb` - Uses efficient-kan library with standard PyTorch training (more memory efficient)
+- `big_project_FFKAN.ipynb` - Fast Fourier KAN variant  
 
 
 ## Project Requirements
@@ -54,6 +59,7 @@ big_project/
 ├── big_project_FFKAN.ipynb
 ├── big_project_gpr_hourly.ipynb
 ├── big_project_KAN.ipynb
+├── big_project_efficient_KAN.ipynb
 ├── big_project_pygam_hourly.ipynb
 ├── big_project_random_forest_hourly.ipynb
 ├── big_project_svr_hourly.ipynb
@@ -127,6 +133,11 @@ big_project/
 pip install -r big_project/requirements.txt
 ```
 
+**Note for efficient-kan:** The efficient-kan library is not available on PyPI and must be installed from GitHub:
+```bash
+pip install git+https://github.com/Blealtan/efficient-kan.git
+```
+
 ## Usage
 
 - End-to-end: open and run `big_project/big_project.ipynb`.
@@ -196,6 +207,8 @@ This work is intended for coursework. Cite all data sources appropriately and en
 - Kaggle discussion on splitting: https://www.kaggle.com/discussions/getting-started/551515
 - Forecasting: Principles and Practice: http://103.203.175.90:81/fdScript/RootOfEBooks/E%20Book%20collection%20-%202025/MED/Forecasting_%20Principles%20and%20Practice.pdf
 - Gemini prompt (example): https://gemini.google.com/share/54cd534a5aeb
+- PyKAN (Kolmogorov-Arnold Networks): https://github.com/KindXiaoming/pykan
+- Efficient KAN (optimized implementation): https://github.com/Blealtan/efficient-kan
 
 ## Contributors
 
