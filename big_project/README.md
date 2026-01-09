@@ -2,7 +2,10 @@
 
 ## Overview
 
-This project explores forecasting of solar generation using meteorological data (Copernicus, Meteostat) and ESB Microgen readings. Multiple machine learning approaches are evaluated, including tree ensembles (Random Forest, AdaBoost, XGBoost), neural networks (PyTorch ANN), and KAN variants.
+This project explores solar generation forecasting using meteorological data (Copernicus, Meteostat) and ESB Microgen readings. Multiple machine learning approaches are evaluated, including tree ensembles (Random Forest, AdaBoost, XGBoost), neural networks (PyTorch ANN), and Kolmogorov-Arnold Network (KAN) variants.  
+  
+Special attention is given to residual analysis (Bland-Altman, Q-Q plots) to identify systematic bias and heavy-tailed error distributions common in solar forecasting. KANs are employed as a novel methodology (introduced in 2024) to overcome the 'black box' limitations of standard ANNs. They explicitly demonstrate the additive nature of the features, offering interpretability comparable to Random Forest decision trees.  
+
 
 ## Project Requirements
 
@@ -14,6 +17,17 @@ For full project requirements and specifications, see [Project Description.pdf](
 - Train and compare several regression models for generation forecasting.
 - Evaluate models with standard metrics (RMSE, MAE, R²).
 - Persist trained models and report test metrics for transparent comparison.
+
+
+## Conclusion
+
+This project establishes Random Forest as the baseline for forecasting solar PV output, achieving an acceptable degree of accuracy given the weather data. Alternative approaches, including Gradient Boosting (XGBoost, AdaBoost), Artificial Neural Networks (ANN), and Kolmogorov-Arnold Networks (KAN), yielded similar accuracy, with the simple ANN emerging as the best-performing model. All these models attempt to capture the complex, non-linear nature of solar and weather forecasting.
+
+The KAN model offers a distinct advantage by not functioning as a 'black box'; instead, it reveals the underlying physical additive and subtractive nature of the feature dataset.
+
+Despite the baseline's good accuracy, residual analysis (using Q-Q and Bland-Altman plots) reveals systematic bias, heavy-tailed error distributions, and evidence of overfitting across all models. This suggests that there is significant room for future improvements.
+
+
 
 ## Data Sources
 
@@ -34,14 +48,21 @@ Raw and processed files live under `data/`, with caches and derived artifacts or
 
 ```text
 big_project/
+├── big_project.ipynb
 ├── big_project_adaboost_hourly.ipynb
 ├── big_project_ANN.ipynb
 ├── big_project_FFKAN.ipynb
+├── big_project_gpr_hourly.ipynb
 ├── big_project_KAN.ipynb
+├── big_project_pygam_hourly.ipynb
 ├── big_project_random_forest_hourly.ipynb
+├── big_project_svr_hourly.ipynb
 ├── big_project_xboost_hourly.ipynb
-├── big_project.ipynb
-├── meteostat .ipynb
+├── cheatsheet.md
+├── cheatsheet_qq_plots.ipynb
+├── cheatsheet_residual_plots.ipynb
+├── cheatshet_bland_alterman_plot.ipynb
+├── feature_columns.md
 ├── README.md
 ├── requirements.txt
 ├── solar_xboost.json
@@ -54,54 +75,27 @@ big_project/
 │   ├── processed_data/
 │   │   ├── Copernicus_Solar_Data_Bettystown_2024_2025.csv
 │   │   ├── Copernicus_Solar_Data_Bettystown_Enriched_2024_2025.csv
-│   │   ├── daily_esb_microgen_data.csv
-│   │   ├── daily_esb_microgen_data.feather
-│   │   ├── daily_solar_data.csv
-│   │   ├── daily_solar_data.feather
-│   │   ├── daily_solar_date.feather
-│   │   ├── df_raw_daily_dublin.csv
-│   │   ├── df_raw_daily_esb_microgen.csv
-│   │   ├── df_raw_daily_solar.csv
+│   │   ├── daily_esb_microgen_data.*
+│   │   ├── daily_solar_data.*
+│   │   ├── df_raw_daily_*.csv
 │   │   ├── df_raw_monthly_solar.csv
 │   │   ├── df_raw_yearly_solar.csv
 │   │   ├── df_weather.csv
-│   │   ├── esb_microgen_data.csv
 │   │   └── ...
 │   ├── raw_data/
 │   │   ├── copernicus/
 │   │   ├── esb/
 │   │   └── ...
 │   └── training_data/
+├── documentation/
+│   └── Project Description.pdf
 ├── figures/
 ├── images/
 │   └── ESB_SOLAR.drawio
 ├── model/
-│   ├── 0.0_cache_data
-│   ├── 0.0_config.yml
-│   ├── 0.0_state
-│   ├── 0.1_cache_data
-│   ├── 0.1_config.yml
-│   ├── 0.1_state
-│   ├── 0.2_cache_data
-│   ├── 0.2_config.yml
-│   ├── 0.2_state
-│   ├── 0.3_cache_data
-│   ├── 0.3_config.yml
-│   ├── 0.3_state
-│   ├── 0.4_cache_data
-│   ├── 0.4_config.yml
-│   ├── 0.4_state
-│   ├── 0.5_cache_data
-│   ├── 0.5_config.yml
-│   ├── 0.5_state
-│   ├── 0.6_cache_data
-│   ├── 0.6_config.yml
-│   ├── 0.6_state
+│   ├── 0.*_{cache_data,config.yml,state}
 │   ├── history.txt
-│   ├── kan_model_target.ckpt
-│   ├── kan_model_target.ckpt_cache_data
-│   ├── kan_model_target.ckpt_config.yml
-│   ├── kan_model_target.ckpt_state
+│   ├── kan_model_target.*
 │   ├── pytorch_ann_model.pth
 │   └── ...
 ├── results/
@@ -113,9 +107,13 @@ big_project/
 │   └── xgboost_regressor_hourly_test_metrics.csv
 └── sandbox/
     ├── big_project_adaboost.ipynb
+    ├── big_project_tft_hourly.ipynb
     ├── big_project_validate_timezones.ipynb
     ├── big_project_xboost.ipynb
     ├── fftKAN.py
+    ├── GPR_IMPLEMENTATION_NOTES.md
+    ├── GPR_QUICK_START.md
+    ├── meteostat .ipynb
     └── nasa.ipynb
 ```
 

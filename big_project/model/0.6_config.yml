@@ -3,7 +3,7 @@ auto_save: true
 base_fun_name: silu
 ckpt_path: ./model
 device: cpu
-grid: 8
+grid: 12
 grid_eps: 0.02
 grid_range:
 - -1
@@ -15,84 +15,88 @@ sb_trainable: true
 sp_trainable: true
 state_id: 6
 symbolic.funs_name.0:
-- - '0'
+- - x
   - x
-  - sin
-  - x
-  - '0'
-  - '0'
-  - '0'
-  - x
-  - x
-  - '0'
-  - x
-  - x
-  - '0'
-  - '0'
-  - x
-  - x
-  - '0'
-  - x
-  - x
-  - x
-  - '0'
   - x
   - x
   - '0'
   - exp
   - x
+  - x
+  - '0'
+  - x
   - '0'
   - x
   - x
   - x
-  - '0'
-  - '0'
   - x
   - x
   - x
-- - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
   - x
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-  - '0'
-symbolic.funs_name.1:
 - - x
+  - x
+  - x
+  - x
+  - x
+  - x
+  - x
+  - x
+  - x
+  - x
+  - x
+  - x
+  - '0'
+  - x
+  - x
+  - x
+  - x
+  - x
+- - x
+  - x
+  - '0'
+  - '0'
+  - '0'
+  - '0'
+  - x
+  - '0'
+  - '0'
+  - x
+  - x
+  - x
+  - '0'
+  - x
+  - '0'
+  - '0'
+  - x
+  - '0'
+- - '0'
+  - x
+  - x
+  - x
+  - '0'
   - x^2
+  - '0'
+  - x
+  - '0'
+  - x
+  - x
+  - x
+  - '0'
+  - x
+  - x
+  - x
+  - x
+  - x
+symbolic.funs_name.1:
+- - exp
+  - sin
+  - exp
+  - cos
 symbolic_enabled: true
 width:
-- - 35
+- - 18
   - 0
-- - 2
+- - 4
   - 0
 - - 1
   - 0
