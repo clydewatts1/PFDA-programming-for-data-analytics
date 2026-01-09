@@ -1,0 +1,32 @@
+{
+  "target_column": "Clearsky_Index",
+  "model_type": "KAN",
+  "feature_columns": [
+    "Precipitation(mm)",
+    "HourOfDay_Sin",
+    "Total_Power_ClearSky_Output(W)",
+    "Temperature(C)",
+    "Dew Point(C)",
+    "Humidity(%)",
+    "Wind Gust(m/s)",
+    "HourOfDay_Cos",
+    "Pressure(hPa)",
+    "Wind Speed(m/s)",
+    "WeekOfYear",
+    "DayOfYear_Sin",
+    "Month_Cos",
+    "Temp_Lag1",
+    "Humidity_Lag1",
+    "Month_Sin",
+    "Wind Cooling",
+    "DayOfYear_Cos"
+  ],
+  "formulas": {
+    "formula_1": {
+      "raw_string": "0.000*DayOfYear_Cos + 0.000*DayOfYear_Sin - 0.020*Dew Point(C) - 0.002*HourOfDay_Cos - 0.004*HourOfDay_Sin - 0.001*Humidity(%) - 0.003*Humidity_Lag1.000 - 0.002*Month_Cos + 0.006*Month_Sin - 0.015*Precipitation(mm) - 0.003*Temp_Lag1.000 + 0.011*Temperature(C) + 0.004*Total_Power_ClearSky_Output(W) - 0.005*WeekOfYear + 0.002*Wind Cooling - 0.002*Wind Gust(m/s) - 0.001*Wind Speed(m/s) - 0.438*cos(0.010*DayOfYear_Cos + 0.001*DayOfYear_Sin + 0.072*Dew Point(C) - 0.040*HourOfDay_Cos - 0.062*HourOfDay_Sin + 0.192*Humidity(%) + 0.021*Humidity_Lag1.000 + 0.003*Month_Sin - 0.008*Precipitation(mm) + 0.007*Pressure(hPa) + 0.006*Temp_Lag1.000 - 0.027*Temperature(C) + 0.017*Total_Power_ClearSky_Output(W) + 0.031*WeekOfYear + 0.045*Wind Cooling + 0.034*Wind Gust(m/s) + 0.010*Wind Speed(m/s) + 24.199) - 0.116",
+      "simplified_string": "3.532E+12*DayOfYear_Cos/2.000E+16 + 2.655E+14*DayOfYear_Sin/1.000E+18 - 1.996E+14*Dew Point(C)/1.000E+16 - 1.099E+14*HourOfDay_Cos/5.000E+16 - 9.499E+12*HourOfDay_Sin/2.500E+15 - 9.790E+13*Humidity(%)/1.000E+17 - 2.588E+12*Humidity_Lag1.000/1.000E+15 - 4.525E+12*Month_Cos/2.500E+15 + 6.449E+14*Month_Sin/1.000E+17 - 3.759E+13*Precipitation(mm)/2.500E+15 - 7.195E+13*Temp_Lag1.000/2.500E+16 + 1.123E+14*Temperature(C)/1.000E+16 + 1.949E+14*Total_Power_ClearSky_Output(W)/5.000E+16 - 2.351E+13*WeekOfYear/5.000E+15 + 1.211E+13*Wind Cooling/5.000E+15 - 2.284E+14*Wind Gust(m/s)/1.000E+17 - 1.241E+14*Wind Speed(m/s)/1.000E+17 - 5.470E+13*cos(1.003E+14*DayOfYear_Cos/1.000E+16 + 5.330E+13*DayOfYear_Sin/5.000E+16 + 3.587E+14*Dew Point(C)/5.000E+15 - 4.011E+14*HourOfDay_Cos/1.000E+16 - 3.080E+14*HourOfDay_Sin/5.000E+15 + 2.399E+13*Humidity(%)/1.250E+14 + 1.067E+14*Humidity_Lag1.000/5.000E+15 + 3.342E+13*Month_Sin/1.250E+16 - 4.079E+14*Precipitation(mm)/5.000E+16 + 1.682E+14*Pressure(hPa)/2.500E+16 + 6.133E+14*Temp_Lag1.000/1.000E+17 - 1.357E+14*Temperature(C)/5.000E+15 + 1.731E+14*Total_Power_ClearSky_Output(W)/1.000E+16 + 7.857E+13*WeekOfYear/2.500E+15 + 4.515E+14*Wind Cooling/1.000E+16 + 3.359E+14*Wind Gust(m/s)/1.000E+16 + 6.284E+12*Wind Speed(m/s)/6.250E+14 + 3.025E+13/1.250E+12)/1.250E+14 - 5.794E+13/5.000E+14",
+      "latex": "0.000 DayOfYear_{Cos} + 0.000 DayOfYear_{Sin} - 0.020 Dew Point(C) - 0.002 HourOfDay_{Cos} - 0.004 HourOfDay_{Sin} - 0.001 Humidity(%) - 0.003 Humidity_{Lag1.000} - 0.002 Month_{Cos} + 0.006 Month_{Sin} - 0.015 Precipitation(mm) - 0.003 Temp_{Lag1.000} + 0.011 Temperature(C) + 0.004 Total_{Power ClearSky Output(W)} - 0.005 WeekOfYear + 0.002 Wind Cooling - 0.002 Wind Gust(m/s) - 0.001 Wind Speed(m/s) - 0.438 \\cos{\\left(0.010 DayOfYear_{Cos} + 0.001 DayOfYear_{Sin} + 0.072 Dew Point(C) - 0.040 HourOfDay_{Cos} - 0.062 HourOfDay_{Sin} + 0.192 Humidity(%) + 0.021 Humidity_{Lag1.000} + 0.003 Month_{Sin} - 0.008 Precipitation(mm) + 0.007 Pressure(hPa) + 0.006 Temp_{Lag1.000} - 0.027 Temperature(C) + 0.017 Total_{Power ClearSky Output(W)} + 0.031 WeekOfYear + 0.045 Wind Cooling + 0.034 Wind Gust(m/s) + 0.010 Wind Speed(m/s) + 24.199 \\right)} - 0.116",
+      "sympy_type": "<class 'sympy.core.add.Add'>"
+    }
+  }
+}
