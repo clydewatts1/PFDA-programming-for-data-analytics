@@ -143,6 +143,7 @@ pip install git+https://github.com/Blealtan/efficient-kan.git
 - End-to-end: open and run `big_project/big_project.ipynb`.
 - Individual models: run the corresponding notebooks (e.g., `big_project/big_project_xboost_hourly.ipynb`).
 - Data preparation: review `data/` contents and any preprocessing notebooks in `sandbox/` as needed.
+- ANN/KAN/FFKAN Require PYTORCH with GPU 
 
 ## Results & Artifacts
 
@@ -164,12 +165,10 @@ This project used AI tools to support learning and development:
 - Google Gemini: Brainstorming approaches, study aid for research and explanation, and code assistant for drafting and refinement.
 
 Notes:
-- To Be Filled In: specific prompts, sessions, and concrete contributions (e.g., which notebooks or functions were assisted).
-- Add dates/versions if required by coursework guidelines.
 
-## Academic Integrity
 
-This work is intended for coursework. Cite all data sources appropriately and ensure any external code or libraries are used within academic guidelines.
+
+
 
 ### References
 
