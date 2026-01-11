@@ -43,6 +43,18 @@ torchvision>=0.15.0
 # seaborn (already listed)
 
 # ------------------------------------------------------------------------------
+# big_project/big_project_LNN.ipynb
+# Liquid Neural Network (CfC) model using ncps
+# ------------------------------------------------------------------------------
+ncps>=0.0.9
+# torch (already listed)
+# numpy (already listed)
+# pandas (already listed)
+# matplotlib (already listed)
+# scikit-learn (already listed)
+# seaborn (already listed)
+
+# ------------------------------------------------------------------------------
 # big_project/big_project_FFKAN.ipynb
 # Fast Fourier KAN model for solar forecasting
 # ------------------------------------------------------------------------------

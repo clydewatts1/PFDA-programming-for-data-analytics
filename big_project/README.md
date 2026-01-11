@@ -2,11 +2,13 @@
 
 ## Overview
 
-This project explores solar generation forecasting using meteorological data (Copernicus, Meteostat) and ESB Microgen readings. Multiple machine learning approaches are evaluated, including tree ensembles (Random Forest, AdaBoost, XGBoost), neural networks (PyTorch ANN), and Kolmogorov-Arnold Network (KAN) variants.  
+This project explores solar generation forecasting using meteorological data (Copernicus, Meteostat) and ESB Microgen readings. Multiple machine learning approaches are evaluated, including tree ensembles (Random Forest, AdaBoost, XGBoost), neural networks (PyTorch ANN, Liquid Neural Networks), and Kolmogorov-Arnold Network (KAN) variants.  
   
 Special attention is given to residual analysis (Bland-Altman, Q-Q plots) to identify systematic bias and heavy-tailed error distributions common in solar forecasting. KANs are employed as a novel methodology (introduced in 2024) to overcome the 'black box' limitations of standard ANNs. They explicitly demonstrate the additive nature of the features, offering interpretability comparable to Random Forest decision trees.
 
-**KAN Implementations:**
+**Neural Network Implementations:**
+- `big_project_ANN.ipynb` - Standard feedforward neural network using PyTorch
+- `big_project_LNN.ipynb` - Liquid Neural Network (CfC) using ncps library for temporal modeling
 - `big_project_KAN.ipynb` - Uses pykan library with custom fit/prune methods
 - `big_project_efficient_KAN.ipynb` - Uses efficient-kan library with standard PyTorch training (more memory efficient)
 - `big_project_FFKAN.ipynb` - Fast Fourier KAN variant  
@@ -60,6 +62,7 @@ big_project/
 ├── big_project_gpr_hourly.ipynb
 ├── big_project_KAN.ipynb
 ├── big_project_efficient_KAN.ipynb
+├── big_project_LNN.ipynb
 ├── big_project_pygam_hourly.ipynb
 ├── big_project_random_forest_hourly.ipynb
 ├── big_project_svr_hourly.ipynb
